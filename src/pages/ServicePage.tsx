@@ -1,20 +1,46 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { LeadForm } from '../components/LeadForm';
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { ChevronDown, ChevronRight, Clock, DollarSign, AlertTriangle } from "lucide-react";
 import { maintenanceData, severityColors } from '../data/maintenanceData';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export default function ServicePage() {
   const { category } = useParams<{ category: string }>();
+  const navigate = useNavigate();
   const [selectedIssue, setSelectedIssue] = useState<string | null>(null);
   const [showLeadForm, setShowLeadForm] = useState(false);
 
   const categoryData = category ? maintenanceData[category.toLowerCase()] : null;
 
+  if (!category) {
+    return (
+      <div className="container mx-auto py-8">
+        <Alert variant="destructive">
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>No category specified</AlertDescription>
+        </Alert>
+        <Button className="mt-4" onClick={() => navigate('/')}>
+          Return Home
+        </Button>
+      </div>
+    );
+  }
+
   if (!categoryData) {
-    return <div className="container mx-auto py-8">Category not found</div>;
+    return (
+      <div className="container mx-auto py-8">
+        <Alert variant="destructive">
+          <AlertTitle>Category Not Found</AlertTitle>
+          <AlertDescription>The category "{category}" does not exist</AlertDescription>
+        </Alert>
+        <Button className="mt-4" onClick={() => navigate('/')}>
+          Return Home
+        </Button>
+      </div>
+    );
   }
 
   return (
@@ -98,7 +124,7 @@ export default function ServicePage() {
             </div>
             <div className="p-4">
               <LeadForm
-                category={category || ''}
+                category={category}
                 service={selectedIssue || ''}
               />
             </div>

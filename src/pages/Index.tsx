@@ -20,7 +20,7 @@ import {
   Droplet,
   TreePine,
   Paintbrush,
-  WindowMaximize
+  Store
 } from "lucide-react";
 import { useState } from "react";
 import { CategorySelector } from "@/components/CategorySelector";
@@ -70,7 +70,7 @@ const Index = () => {
     },
     {
       title: "Residential Windows/Doors",
-      icon: WindowMaximize,
+      icon: Store,
       description: "Home window and door installation and repair",
       path: "/service/windows-doors"
     },

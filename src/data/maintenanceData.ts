@@ -12,6 +12,13 @@ export interface CategoryData {
   issues: MaintenanceIssue[];
 }
 
+export const severityColors: Record<string, string> = {
+  minor: 'bg-blue-100 text-blue-800',
+  moderate: 'bg-yellow-100 text-yellow-800',
+  severe: 'bg-orange-100 text-orange-800',
+  emergency: 'bg-red-100 text-red-800'
+};
+
 export const maintenanceData: Record<string, CategoryData> = {
   electrical: {
     description: "Comprehensive electrical services for residential and commercial properties",
@@ -41,8 +48,7 @@ export const maintenanceData: Record<string, CategoryData> = {
         severity: "moderate",
         estimatedCost: "$100-$300",
         timeToFix: "1-2 hours"
-      },
-      // Add 20+ more electrical issues
+      }
     ]
   },
   plumbing: {
@@ -73,8 +79,7 @@ export const maintenanceData: Record<string, CategoryData> = {
         severity: "moderate",
         estimatedCost: "$100-$300",
         timeToFix: "1-2 hours"
-      },
-      // Add 20+ more plumbing issues
+      }
     ]
   },
   hvac: {
@@ -93,7 +98,19 @@ export const maintenanceData: Record<string, CategoryData> = {
         estimatedCost: "$200-$800",
         timeToFix: "2-4 hours"
       },
-      // Add 20+ more HVAC issues
+      {
+        title: "Heating System Failure",
+        description: "Heating system not producing warm air or working inconsistently",
+        symptoms: [
+          "No heat output",
+          "Cold spots in rooms",
+          "System constantly running",
+          "Strange noises from furnace"
+        ],
+        severity: "severe",
+        estimatedCost: "$300-$1000",
+        timeToFix: "3-6 hours"
+      }
     ]
   },
   roofing: {
@@ -112,15 +129,19 @@ export const maintenanceData: Record<string, CategoryData> = {
         estimatedCost: "$500-$2000",
         timeToFix: "4-8 hours"
       },
-      // Add 20+ more roofing issues
+      {
+        title: "Missing Shingles",
+        description: "Lost or damaged roof shingles exposing underlying structure",
+        symptoms: [
+          "Visible gaps in roofing",
+          "Shingles in yard",
+          "Leaks during rain",
+          "Increased energy bills"
+        ],
+        severity: "moderate",
+        estimatedCost: "$200-$600",
+        timeToFix: "2-4 hours"
+      }
     ]
-  },
-  // Add more categories with their specific issues
-};
-
-export const severityColors = {
-  minor: "bg-blue-100 text-blue-800",
-  moderate: "bg-yellow-100 text-yellow-800",
-  severe: "bg-orange-100 text-orange-800",
-  emergency: "bg-red-100 text-red-800"
+  }
 };
