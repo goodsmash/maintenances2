@@ -1,9 +1,10 @@
+import React from 'react';
 import { Icons } from "@/components/Icons";
 
 export interface ApplianceService {
   id: string;
   name: string;
-  icon: React.ComponentType;
+  icon: React.ComponentType<{className?: string}>;
   description: string;
   keyBenefits: string[];
   repairTypes: string[];
