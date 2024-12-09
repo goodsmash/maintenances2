@@ -1,0 +1,26 @@
+{
+  "domain": "maintenances.org",
+  "hosting": {
+    "type": "shared",
+    "documentRoot": "/home/bevzgchi/maintenances.org",
+    "sshUser": "bevzgchi"
+  },
+  "deployment": {
+    "method": "scp",
+    "buildDirectory": "dist",
+    "excludeFiles": [
+      ".git",
+      "node_modules",
+      "*.sh",
+      "*.json"
+    ]
+  },
+  "routing": {
+    "type": "spa",
+    "fallbackFile": "index.html"
+  },
+  "environment": {
+    "NODE_ENV": "production",
+    "VITE_BASE_URL": "https://maintenances.org"
+  }
+}

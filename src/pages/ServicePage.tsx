@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { LeadForm } from '../components/LeadForm';
 import { Button } from "../components/ui/button";
-import { Card, CardContent } from "../components/ui/card";
-import { ChevronDown, ChevronRight, Clock, DollarSign, AlertTriangle } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import { ChevronLeft } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { maintenanceData, severityColors } from '../data/maintenanceData';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
@@ -13,99 +14,85 @@ export default function ServicePage() {
   const [selectedIssue, setSelectedIssue] = useState<string | null>(null);
   const [showLeadForm, setShowLeadForm] = useState(false);
 
-  const categoryData = category ? maintenanceData[category.toLowerCase()] : null;
-
-  if (!category) {
+  if (!category || !maintenanceData[category]) {
     return (
-      <div className="container mx-auto py-8">
-        <Alert variant="destructive">
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription>No category specified</AlertDescription>
-        </Alert>
-        <Button className="mt-4" onClick={() => navigate('/')}>
-          Return Home
-        </Button>
-      </div>
-    );
-  }
-
-  if (!categoryData) {
-    return (
-      <div className="container mx-auto py-8">
+      <div className="container py-8">
         <Alert variant="destructive">
           <AlertTitle>Category Not Found</AlertTitle>
           <AlertDescription>The category "{category}" does not exist</AlertDescription>
         </Alert>
-        <Button className="mt-4" onClick={() => navigate('/')}>
-          Return Home
-        </Button>
+        <Link to="/">
+          <Button>
+            <ChevronLeft className="mr-2 h-4 w-4" />
+            Return Home
+          </Button>
+        </Link>
       </div>
-    );
+    )
   }
 
+  const { description, issues } = maintenanceData[category]
+
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-6 capitalize">{category} Services</h1>
-      <p className="text-lg mb-8">{categoryData.description}</p>
+    <div className="container py-8">
+      <div className="flex items-center gap-4 mb-8">
+        <Link to="/">
+          <Button variant="outline">
+            <ChevronLeft className="mr-2 h-4 w-4" />
+            Back
+          </Button>
+        </Link>
+        <div>
+          <h1 className="text-3xl font-bold capitalize">{category.replace("-", " ")} Services</h1>
+          <p className="text-muted-foreground">{description}</p>
+        </div>
+      </div>
 
-      <div className="grid grid-cols-1 gap-4">
-        {categoryData.issues.map((issue) => (
-          <Card key={issue.title} className="overflow-hidden">
-            <div
-              className="p-4 cursor-pointer hover:bg-gray-50"
-              onClick={() => setSelectedIssue(selectedIssue === issue.title ? null : issue.title)}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <h3 className="text-lg font-medium">{issue.title}</h3>
-                  <span className={`px-2 py-1 rounded text-sm ${severityColors[issue.severity]}`}>
-                    {issue.severity}
-                  </span>
-                </div>
-                {selectedIssue === issue.title ? (
-                  <ChevronDown className="h-5 w-5" />
-                ) : (
-                  <ChevronRight className="h-5 w-5" />
-                )}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {issues.map((issue) => (
+          <Card key={issue.title} className="group hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <div className="flex items-center justify-between gap-4">
+                <CardTitle className="text-lg">{issue.title}</CardTitle>
+                <Badge className={severityColors[issue.severity]}>
+                  {issue.severity}
+                </Badge>
               </div>
-            </div>
-
-            {selectedIssue === issue.title && (
-              <CardContent className="border-t bg-gray-50">
-                <p className="mb-4 text-gray-700">{issue.description}</p>
-                
-                <div className="grid md:grid-cols-3 gap-4 mb-4">
-                  <div className="flex items-center space-x-2">
-                    <Clock className="h-5 w-5 text-gray-500" />
-                    <span>{issue.timeToFix}</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <DollarSign className="h-5 w-5 text-gray-500" />
-                    <span>{issue.estimatedCost}</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <AlertTriangle className="h-5 w-5 text-gray-500" />
-                    <span className="capitalize">{issue.severity} Priority</span>
-                  </div>
-                </div>
-
-                <div className="mb-4">
-                  <h4 className="font-medium mb-2">Common Symptoms:</h4>
-                  <ul className="list-disc pl-5 space-y-1">
+            </CardHeader>
+            <CardContent>
+              <CardDescription className="mb-4">{issue.description}</CardDescription>
+              
+              <div className="space-y-2">
+                <div>
+                  <strong className="text-sm">Common Symptoms:</strong>
+                  <ul className="list-disc list-inside text-sm text-muted-foreground">
                     {issue.symptoms.map((symptom) => (
-                      <li key={symptom} className="text-gray-700">{symptom}</li>
+                      <li key={symptom}>{symptom}</li>
                     ))}
                   </ul>
                 </div>
-
+                
+                <div>
+                  <strong className="text-sm">Estimated Cost:</strong>
+                  <span className="ml-2 text-sm text-muted-foreground">{issue.estimatedCost}</span>
+                </div>
+                
+                <div>
+                  <strong className="text-sm">Time to Fix:</strong>
+                  <span className="ml-2 text-sm text-muted-foreground">{issue.timeToFix}</span>
+                </div>
+                
                 <Button
-                  onClick={() => setShowLeadForm(true)}
+                  onClick={() => {
+                    setSelectedIssue(issue.title);
+                    setShowLeadForm(true);
+                  }}
                   className="w-full"
                 >
                   Request Service
                 </Button>
-              </CardContent>
-            )}
+              </div>
+            </CardContent>
           </Card>
         ))}
       </div>
@@ -132,5 +119,5 @@ export default function ServicePage() {
         </div>
       )}
     </div>
-  );
+  )
 }

@@ -1,0 +1,22 @@
+{
+  "projectName": "Maintenances",
+  "version": "1.0.0",
+  "buildOutput": "dist",
+  "deploymentMethod": "static-hosting",
+  "environmentVariables": {
+    "VITE_SUPABASE_URL": "${SUPABASE_URL}",
+    "VITE_SUPABASE_ANON_KEY": "${SUPABASE_ANON_KEY}",
+    "VITE_STRIPE_PUBLISHABLE_KEY": "${STRIPE_PUBLISHABLE_KEY}",
+    "VITE_GOOGLE_MAPS_API_KEY": "${GOOGLE_MAPS_API_KEY}"
+  },
+  "domainConfiguration": {
+    "primaryDomain": "maintenances.org",
+    "wwwRedirect": true,
+    "sslCertificate": true
+  },
+  "deploymentPlatform": {
+    "name": "Namecheap",
+    "type": "static-site",
+    "region": "US East"
+  }
+}

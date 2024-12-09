@@ -1,31 +1,27 @@
-import { Navigation } from "@/components/Navigation";
-import { MaintenanceCard } from "@/components/MaintenanceCard";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { 
-  Search, 
-  Wrench, 
-  Building2, 
-  Home, 
-  Settings2, 
-  Zap, 
-  PenLine, 
-  Thermometer, 
-  Hammer, 
-  Shield, 
-  Bug, 
-  Bell, 
-  Lock, 
-  ChefHat,
-  Droplet,
-  TreePine,
-  Paintbrush,
-  Store
-} from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import * as LucideIcons from "lucide-react";
 import { CategorySelector } from "@/components/CategorySelector";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Link } from 'react-router-dom';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { categories } from "@/data/maintenanceData";
+import { Navigation } from "@/components/Navigation";
+
+const categoryIcons: Record<string, any> = {
+  electrical: LucideIcons.Zap,
+  plumbing: LucideIcons.Droplet,
+  hvac: LucideIcons.Thermometer,
+  roofing: LucideIcons.Home,
+  "pest-control": LucideIcons.Bug,
+  appliances: LucideIcons.Radio,
+  carpentry: LucideIcons.Hammer,
+  flooring: LucideIcons.Construction,
+  painting: LucideIcons.PaintBucket,
+  landscaping: LucideIcons.Trees,
+  security: LucideIcons.Shield,
+  cleaning: LucideIcons.Wind
+}
 
 const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -34,67 +30,67 @@ const Index = () => {
   const maintenanceCategories = [
     {
       title: "Residential Plumbing",
-      icon: Droplet,
+      icon: LucideIcons.Droplet,
       description: "Home plumbing repairs and maintenance",
       path: "/service/plumbing"
     },
     {
       title: "Residential HVAC",
-      icon: Thermometer,
+      icon: LucideIcons.Thermometer,
       description: "Home heating and cooling services",
       path: "/service/hvac"
     },
     {
       title: "Residential Electrical",
-      icon: Zap,
+      icon: LucideIcons.Zap,
       description: "Home electrical services",
       path: "/service/electrical"
     },
     {
       title: "Residential Appliances",
-      icon: Settings2,
+      icon: LucideIcons.Settings2,
       description: "Home appliance repair and maintenance",
       path: "/service/appliances"
     },
     {
       title: "Residential Roofing",
-      icon: Home,
+      icon: LucideIcons.Home,
       description: "Home roofing repairs and maintenance",
       path: "/service/roofing"
     },
     {
       title: "Residential Landscaping",
-      icon: TreePine,
+      icon: LucideIcons.TreePine,
       description: "Home landscaping services",
       path: "/service/landscaping"
     },
     {
       title: "Residential Windows/Doors",
-      icon: Store,
+      icon: LucideIcons.Store,
       description: "Home window and door installation and repair",
       path: "/service/windows-doors"
     },
     {
       title: "Residential Painting",
-      icon: Paintbrush,
+      icon: LucideIcons.Paintbrush,
       description: "Home painting services",
       path: "/service/painting"
     },
     {
       title: "Residential Pest Control",
-      icon: Bug,
+      icon: LucideIcons.Bug,
       description: "Home pest control services",
       path: "/service/pest-control"
     },
     {
       title: "Residential Fire Safety",
-      icon: Bell,
+      icon: LucideIcons.Bell,
       description: "Home fire safety services",
       path: "/service/fire-safety"
     },
     {
       title: "Residential Security",
-      icon: Shield,
+      icon: LucideIcons.Shield,
       description: "Home security services",
       path: "/service/security"
     }
@@ -103,51 +99,51 @@ const Index = () => {
   const commercialCategories = [
     {
       title: "Commercial Plumbing",
-      icon: Wrench,
+      icon: LucideIcons.Wrench,
       description: "Commercial plumbing services",
-      path: "/commercial/plumbing"
+      path: "/service/commercial/plumbing"
     },
     {
       title: "Commercial HVAC",
-      icon: Thermometer,
+      icon: LucideIcons.Thermometer,
       description: "Commercial HVAC services",
-      path: "/commercial/hvac"
+      path: "/service/commercial/hvac"
     },
     {
       title: "Commercial Electrical",
-      icon: Zap,
+      icon: LucideIcons.Zap,
       description: "Commercial electrical services",
-      path: "/commercial/electrical"
+      path: "/service/commercial/electrical"
     },
     {
       title: "Commercial Construction",
-      icon: Building2,
+      icon: LucideIcons.Building2,
       description: "Commercial construction services",
-      path: "/commercial/construction"
+      path: "/service/commercial/construction"
     },
     {
       title: "Commercial Security",
-      icon: Shield,
+      icon: LucideIcons.Shield,
       description: "Commercial security services",
-      path: "/commercial/security"
+      path: "/service/commercial/security"
     },
     {
       title: "Commercial Pest Control",
-      icon: Bug,
+      icon: LucideIcons.Bug,
       description: "Commercial pest control services",
-      path: "/commercial/pest-control"
+      path: "/service/commercial/pest-control"
     },
     {
       title: "Commercial Fire Safety",
-      icon: Bell,
+      icon: LucideIcons.Bell,
       description: "Commercial fire safety services",
-      path: "/commercial/fire-safety"
+      path: "/service/commercial/fire-safety"
     },
     {
       title: "Commercial Kitchen",
-      icon: ChefHat,
+      icon: LucideIcons.ChefHat,
       description: "Commercial kitchen services",
-      path: "/commercial/kitchen"
+      path: "/service/commercial/kitchen"
     }
   ];
 
@@ -209,7 +205,7 @@ const Index = () => {
         <div className="flex gap-4 mb-8">
           <div className="flex-1">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <LucideIcons.Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <Input
                 type="text"
                 placeholder="Search services..."
@@ -298,6 +294,40 @@ const Index = () => {
                 <p>Meeting all health, safety, and industry regulations</p>
               </CardContent>
             </Card>
+          </div>
+        </div>
+
+        <div className="container py-8">
+          <div className="flex flex-col items-center text-center mb-8">
+            <h1 className="text-4xl font-bold tracking-tight">Maintenance Services</h1>
+            <p className="text-lg text-muted-foreground mt-2">
+              Professional maintenance and repair services for your home and business
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categories.map((category) => {
+              const Icon = categoryIcons[category]
+              return (
+                <Card key={category} className="group hover:shadow-lg transition-shadow">
+                  <Link to={`/service/${category}`}>
+                    <CardHeader>
+                      <div className="flex items-center gap-2">
+                        {Icon && <Icon className="h-5 w-5" />}
+                        <CardTitle className="capitalize">
+                          {category.replace("-", " ")}
+                        </CardTitle>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription>
+                        Click to view available services
+                      </CardDescription>
+                    </CardContent>
+                  </Link>
+                </Card>
+              )
+            })}
           </div>
         </div>
       </main>
