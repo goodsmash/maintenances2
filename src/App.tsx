@@ -10,6 +10,7 @@ import SubscriptionPage from './pages/Subscription'
 import ServicePage from './pages/ServicePage'
 import CommercialServicePage from './pages/CommercialServicePage'
 import ApplianceServices from "./pages/ApplianceServices"
+import CommercialServices from "./pages/CommercialServices"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,6 +35,7 @@ function App() {
                   <Route path="/subscription" element={<SubscriptionPage />} />
                   <Route path="/service/:category" element={<ServicePage />} />
                   <Route path="/service/commercial/:category" element={<CommercialServicePage />} />
+                  <Route path="/service/commercial" element={<CommercialServices />} />
                   <Route path="/service/appliances" element={<ApplianceServices />} />
                 </Routes>
               </div>

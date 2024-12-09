@@ -11,6 +11,7 @@ const menuItems = [
   { title: "Settings", icon: Settings, url: "/settings" },
   { title: "Profile", icon: User, url: "/profile" },
   { title: "Appliance Services", icon: Wrench, url: "/service/appliances" },
+  { title: "Commercial Services", icon: Wrench, url: "/service/commercial" },
 ]
 
 export function MainNav() {
