@@ -1,0 +1,43 @@
+{
+  "title": "Servicios de Contratistas",
+  "subtitle": "Servicios Profesionales para Construcción y Desarrollo",
+  "services": {
+    "constructionManagement": {
+      "name": "Gestión de Construcción",
+      "shortDescription": "Supervisión y coordinación integral de proyectos de construcción",
+      "fullDescription": "Servicios profesionales de gestión de construcción que garantizan una entrega eficiente, segura y de alta calidad desde el concepto hasta la finalización."
+    },
+    "projectEstimation": {
+      "name": "Estimación de Costos de Proyecto",
+      "shortDescription": "Estimación precisa y completa de costos para proyectos de construcción y renovación",
+      "fullDescription": "Servicios de estimación detallados y precisos que proporcionan proyecciones financieras transparentes y confiables para sus proyectos de construcción."
+    },
+    "siteSurveying": {
+      "name": "Topografía y Mapeo de Sitios",
+      "shortDescription": "Servicios integrales de levantamiento topográfico y mapeo para proyectos de construcción y desarrollo",
+      "fullDescription": "Servicios profesionales de topografía que proporcionan un mapeo topográfico, de límites y ambiental preciso para una planificación informada."
+    },
+    "permitManagement": {
+      "name": "Gestión de Permisos y Cumplimiento Regulatorio",
+      "shortDescription": "Servicios integrales de adquisición de permisos y cumplimiento regulatorio para proyectos de construcción",
+      "fullDescription": "Navegación experta de procesos de permisos complejos, asegurando el cumplimiento regulatorio fluido para proyectos residenciales, comerciales e infraestructura."
+    }
+  },
+  "whyChooseUs": {
+    "title": "¿Por qué elegir nuestros Servicios de Contratistas?",
+    "benefits": [
+      {
+        "title": "Experiencia Profesional",
+        "description": "Profesionales altamente capacitados con conocimiento líder en la industria"
+      },
+      {
+        "title": "Soluciones Integrales",
+        "description": "Servicios de extremo a extremo que cubren todos los aspectos de la gestión de proyectos"
+      },
+      {
+        "title": "Tecnologías Avanzadas",
+        "description": "Herramientas y metodologías de vanguardia para una ejecución de proyectos precisa"
+      }
+    ]
+  }
+}

@@ -12,6 +12,8 @@ const menuItems = [
   { title: "Profile", icon: User, url: "/profile" },
   { title: "Appliance Services", icon: Wrench, url: "/service/appliances" },
   { title: "Commercial Services", icon: Wrench, url: "/service/commercial" },
+  { title: "Painting Services", icon: Wrench, url: "/service/painting" },
+  { title: "Contractor Services", icon: Wrench, url: "/service/contractor" },
 ]
 
 export function MainNav() {

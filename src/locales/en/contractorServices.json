@@ -1,0 +1,43 @@
+{
+  "title": "Contractor Services",
+  "subtitle": "Professional Services for Construction and Development",
+  "services": {
+    "constructionManagement": {
+      "name": "Construction Management",
+      "shortDescription": "Comprehensive project oversight and coordination for construction projects",
+      "fullDescription": "Professional construction management services that ensure efficient, safe, and high-quality project delivery from concept to completion."
+    },
+    "projectEstimation": {
+      "name": "Project Cost Estimation",
+      "shortDescription": "Precise and comprehensive cost estimation for construction and renovation projects",
+      "fullDescription": "Detailed and accurate cost estimation services that provide transparent and reliable financial projections for your construction projects."
+    },
+    "siteSurveying": {
+      "name": "Site Surveying and Mapping",
+      "shortDescription": "Comprehensive land surveying and mapping services for construction and development projects",
+      "fullDescription": "Professional site surveying services providing precise topographical, boundary, and environmental mapping for informed project planning."
+    },
+    "permitManagement": {
+      "name": "Permit and Regulatory Compliance",
+      "shortDescription": "Comprehensive permit acquisition and regulatory compliance services for construction projects",
+      "fullDescription": "Expert navigation of complex permitting processes, ensuring smooth regulatory compliance for residential, commercial, and infrastructure projects."
+    }
+  },
+  "whyChooseUs": {
+    "title": "Why Choose Our Contractor Services?",
+    "benefits": [
+      {
+        "title": "Professional Expertise",
+        "description": "Highly skilled professionals with industry-leading knowledge"
+      },
+      {
+        "title": "Comprehensive Solutions",
+        "description": "End-to-end services covering all aspects of project management"
+      },
+      {
+        "title": "Advanced Technologies",
+        "description": "Cutting-edge tools and methodologies for precise project execution"
+      }
+    ]
+  }
+}

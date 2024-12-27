@@ -1,22 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { commercialServiceCategories } from "@/data/commercialServiceCategoriesData";
+import { paintingServices } from "@/data/paintingServicesData";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { LeadForm } from "@/components/LeadForm";
 
-const CommercialServices: React.FC = () => {
+const PaintingServices: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-12">
       <h1 className="text-4xl font-bold text-center mb-12">
-        Comprehensive Commercial Maintenance Solutions
+        Comprehensive Painting Services
       </h1>
       
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {commercialServiceCategories.map((service) => (
+        {paintingServices.map((service) => (
           <Link 
-            to={`/service/commercial/${service.id}`} 
+            to={`/service/painting/${service.id}`} 
             key={service.id}
             className="hover:no-underline"
           >
@@ -43,19 +40,19 @@ const CommercialServices: React.FC = () => {
       </div>
       
       <div className="mt-16 text-center">
-        <h2 className="text-3xl font-bold mb-6">Why Choose Our Commercial Services?</h2>
+        <h2 className="text-3xl font-bold mb-6">Why Choose Our Painting Services?</h2>
         <div className="grid md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-xl font-semibold mb-4">Professional Service</h3>
-            <p>Licensed and insured contractors for both residential and commercial needs</p>
+            <h3 className="text-xl font-semibold mb-4">Professional Quality</h3>
+            <p>Expert painters with meticulous attention to detail</p>
           </div>
           <div>
-            <h3 className="text-xl font-semibold mb-4">24/7 Emergency Service</h3>
-            <p>Round-the-clock support for urgent maintenance issues</p>
+            <h3 className="text-xl font-semibold mb-4">Comprehensive Solutions</h3>
+            <p>From residential to commercial, we cover all painting needs</p>
           </div>
           <div>
-            <h3 className="text-xl font-semibold mb-4">Industry Compliance</h3>
-            <p>Meeting all health, safety, and industry regulations</p>
+            <h3 className="text-xl font-semibold mb-4">Color Expertise</h3>
+            <p>Professional color consultation and design guidance</p>
           </div>
         </div>
       </div>
@@ -63,4 +60,4 @@ const CommercialServices: React.FC = () => {
   );
 };
 
-export default CommercialServices;
+export default PaintingServices;

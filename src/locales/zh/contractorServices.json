@@ -1,0 +1,43 @@
+{
+  "title": "承包商服务",
+  "subtitle": "建筑和开发的专业服务",
+  "services": {
+    "constructionManagement": {
+      "name": "建筑管理",
+      "shortDescription": "建筑项目的全面监督和协调",
+      "fullDescription": "专业的建筑管理服务，确保从概念到完工的高效、安全和高质量项目交付。"
+    },
+    "projectEstimation": {
+      "name": "项目成本估算",
+      "shortDescription": "建筑和翻新项目的精确和全面成本估算",
+      "fullDescription": "详细和准确的成本估算服务，为您的建筑项目提供透明和可靠的财务预测。"
+    },
+    "siteSurveying": {
+      "name": "现场测量和制图",
+      "shortDescription": "建筑和开发项目的全面土地测量和制图服务",
+      "fullDescription": "专业的现场测量服务，提供精确的地形、边界和环境测绘，为知情的项目规划提供支持。"
+    },
+    "permitManagement": {
+      "name": "许可证管理和法规合规",
+      "shortDescription": "建筑项目的全面许可证获取和法规合规服务",
+      "fullDescription": "专家级复杂许可证流程导航，确保住宅、商业和基础设施项目的顺利法规合规。"
+    }
+  },
+  "whyChooseUs": {
+    "title": "为什么选择我们的承包商服务？",
+    "benefits": [
+      {
+        "title": "专业专长",
+        "description": "具有行业领先知识的高技能专业人士"
+      },
+      {
+        "title": "全面解决方案",
+        "description": "覆盖项目管理各个方面的端到端服务"
+      },
+      {
+        "title": "先进技术",
+        "description": "尖端工具和方法论，实现精确的项目执行"
+      }
+    ]
+  }
+}
