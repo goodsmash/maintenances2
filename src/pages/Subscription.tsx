@@ -1,12 +1,15 @@
-import React from 'react';
-import { Button } from "../components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
+import React, { useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check } from "lucide-react";
+import { PaymentSystem } from '../components/PaymentSystem';
+import { useNavigate } from 'react-router-dom';
 
 const plans = [
   {
+    id: 'basic',
     name: 'Basic Plan',
-    price: '$15',
+    price: 15,
     period: 'month',
     features: [
       'Submit maintenance requests',
@@ -16,8 +19,9 @@ const plans = [
     ]
   },
   {
+    id: 'premium',
     name: 'Premium Plan',
-    price: '$25',
+    price: 25,
     period: 'month',
     features: [
       'All Basic Plan features',
@@ -31,21 +35,40 @@ const plans = [
 ];
 
 export default function SubscriptionPage() {
-  const handleSubscribe = async (planName: string) => {
-    // TODO: Implement Stripe checkout
-    console.log(`Subscribing to ${planName}`);
+  const [selectedPlan, setSelectedPlan] = useState<typeof plans[0] | null>(null);
+  const navigate = useNavigate();
+
+  const handleCancel = () => {
+    setSelectedPlan(null);
   };
+
+  const handleSuccess = () => {
+    navigate('/dashboard');
+  };
+
+  if (selectedPlan) {
+    return (
+      <div className="container mx-auto py-12">
+        <PaymentSystem
+          amount={selectedPlan.price}
+          planName={selectedPlan.name}
+          onCancel={handleCancel}
+          onSuccess={handleSuccess}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto py-12">
       <h1 className="text-3xl font-bold text-center mb-8">Choose Your Plan</h1>
       <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         {plans.map((plan) => (
-          <Card key={plan.name} className="relative">
+          <Card key={plan.id} className="relative">
             <CardHeader>
               <CardTitle className="text-2xl">{plan.name}</CardTitle>
               <div className="text-3xl font-bold">
-                {plan.price}
+                ${plan.price}
                 <span className="text-base font-normal">/{plan.period}</span>
               </div>
             </CardHeader>
@@ -60,7 +83,7 @@ export default function SubscriptionPage() {
               </ul>
               <Button
                 className="w-full mt-6"
-                onClick={() => handleSubscribe(plan.name)}
+                onClick={() => setSelectedPlan(plan)}
               >
                 Subscribe Now
               </Button>

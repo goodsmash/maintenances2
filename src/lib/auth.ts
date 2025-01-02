@@ -1,9 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+// Mock configuration for development
+const config = {
+  supabaseUrl: 'https://your-project.supabase.co',  // Replace with actual URL when ready
+  supabaseAnonKey: 'your-anon-key'  // Replace with actual key when ready
+};
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = config.supabaseUrl && config.supabaseAnonKey 
+  ? createClient(config.supabaseUrl, config.supabaseAnonKey)
+  : null;
 
 export interface UserProfile {
   id: string;
@@ -23,7 +28,49 @@ export interface UserProfile {
   created_at: string;
 }
 
+// Mock auth functions for development
+export const auth = {
+  signUp: async (email: string, password: string, userData: Partial<UserProfile>) => {
+    console.log('Mock signup:', { email, userData });
+    return { user: { id: 'mock-user-id', ...userData }, session: null };
+  },
+
+  signIn: async (email: string, password: string) => {
+    console.log('Mock signin:', { email });
+    return { user: { id: 'mock-user-id', email }, session: null };
+  },
+
+  signOut: async () => {
+    console.log('Mock signout');
+    return { error: null };
+  },
+
+  getCurrentUser: async () => {
+    return { user: null, session: null };
+  },
+
+  updateProfile: async (userId: string, updates: Partial<UserProfile>) => {
+    console.log('Mock update profile:', { userId, updates });
+    return { data: updates, error: null };
+  },
+
+  checkSubscription: async (userId: string) => {
+    return { data: { status: 'active', tier: 'basic' }, error: null };
+  },
+
+  getAllUsers: async () => {
+    return { data: [], error: null };
+  },
+
+  updateUserRole: async (userId: string, role: UserProfile['role']) => {
+    console.log('Mock update role:', { userId, role });
+    return { data: { role }, error: null };
+  }
+};
+
+// Original auth functions
 export async function signUp(email: string, password: string, userData: Partial<UserProfile>) {
+  if (!supabase) return auth.signUp(email, password, userData);
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -43,6 +90,7 @@ export async function signUp(email: string, password: string, userData: Partial<
 }
 
 export async function signIn(email: string, password: string) {
+  if (!supabase) return auth.signIn(email, password);
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password
@@ -53,11 +101,13 @@ export async function signIn(email: string, password: string) {
 }
 
 export async function signOut() {
+  if (!supabase) return auth.signOut();
   const { error } = await supabase.auth.signOut();
   if (error) throw error;
 }
 
 export async function getCurrentUser() {
+  if (!supabase) return auth.getCurrentUser();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
 
@@ -74,6 +124,7 @@ export async function getCurrentUser() {
 }
 
 export async function updateProfile(userId: string, updates: Partial<UserProfile>) {
+  if (!supabase) return auth.updateProfile(userId, updates);
   const { data, error } = await supabase
     .from('profiles')
     .update(updates)
@@ -84,6 +135,7 @@ export async function updateProfile(userId: string, updates: Partial<UserProfile
 }
 
 export async function checkSubscription(userId: string) {
+  if (!supabase) return auth.checkSubscription(userId);
   const { data, error } = await supabase
     .from('subscriptions')
     .select('*')
@@ -96,6 +148,7 @@ export async function checkSubscription(userId: string) {
 
 // Admin functions
 export async function getAllUsers() {
+  if (!supabase) return auth.getAllUsers();
   const { data, error } = await supabase
     .from('profiles')
     .select('*')
@@ -106,6 +159,7 @@ export async function getAllUsers() {
 }
 
 export async function updateUserRole(userId: string, role: UserProfile['role']) {
+  if (!supabase) return auth.updateUserRole(userId, role);
   const { data, error } = await supabase
     .from('profiles')
     .update({ role })

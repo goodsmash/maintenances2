@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import { getCurrentUser, UserProfile } from '@/lib/auth';
 
 interface ProtectedRouteProps {
@@ -13,7 +13,7 @@ export function ProtectedRoute({
   allowedRoles,
   requireSubscription = false,
 }: ProtectedRouteProps) {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<UserProfile | null>(null);
 
@@ -23,33 +23,33 @@ export function ProtectedRoute({
         const currentUser = await getCurrentUser();
         
         if (!currentUser) {
-          router.push('/auth?redirect=' + encodeURIComponent(router.asPath));
+          navigate('/auth?redirect=' + encodeURIComponent(navigate.location.pathname));
           return;
         }
 
         if (allowedRoles && !allowedRoles.includes(currentUser.role)) {
-          router.push('/unauthorized');
+          navigate('/unauthorized');
           return;
         }
 
         if (requireSubscription && 
             (!currentUser.subscription_status || 
              currentUser.subscription_status !== 'active')) {
-          router.push('/subscription');
+          navigate('/subscription');
           return;
         }
 
         setUser(currentUser);
       } catch (error) {
         console.error('Auth check failed:', error);
-        router.push('/auth');
+        navigate('/auth');
       } finally {
         setLoading(false);
       }
     }
 
     checkAuth();
-  }, [router, allowedRoles, requireSubscription]);
+  }, [allowedRoles, requireSubscription, navigate]);
 
   if (loading) {
     return (

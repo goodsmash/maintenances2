@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Accordion,
@@ -115,7 +115,7 @@ function CategorySection({ category, onRequestService }: CategorySectionProps) {
 }
 
 export function ServiceCatalog() {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedUrgency, setSelectedUrgency] = useState<string>('all');
@@ -142,9 +142,8 @@ export function ServiceCatalog() {
   });
 
   const handleRequestService = (service: Service, category: ServiceCategory) => {
-    router.push({
-      pathname: '/service-request',
-      query: {
+    navigate(`/service-request`, {
+      state: {
         serviceId: service.id,
         categoryId: category.id,
         urgency: selectedUrgency,

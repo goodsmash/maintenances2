@@ -1,7 +1,7 @@
 import { loadStripe } from '@stripe/stripe-js';
 import { supabase } from './auth';
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
 
 export interface Payment {
   id: string;

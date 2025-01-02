@@ -1,22 +1,13 @@
-import { Toaster } from "@/components/ui/toaster"
-import { Toaster as Sonner } from "@/components/ui/sonner"
-import { TooltipProvider } from "@/components/ui/tooltip"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import ErrorBoundary from "./components/ErrorBoundary"
-import { MainNav } from "./components/MainNav"
-import Index from "./pages/Index"
-import SubscriptionPage from './pages/Subscription'
-import ServicePage from './pages/ServicePage'
-import CommercialServicePage from './pages/CommercialServicePage'
-import ApplianceServices from "./pages/ApplianceServices"
-import CommercialServices from "./pages/CommercialServices"
-import CommercialServiceCategory from './pages/CommercialServiceCategory';
-import PaintingServices from "./pages/PaintingServices";
-import PaintingServiceCategory from "./pages/PaintingServiceCategory";
-import ContractorServices from "./pages/ContractorServices";
-import ContractorServiceCategory from "./pages/ContractorServiceCategory";
-import { LanguageProvider } from "./context/LanguageContext";
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Auth0Provider } from '@auth0/auth0-react';
+import { TooltipProvider } from '@radix-ui/react-tooltip';
+import { LanguageProvider } from './context/LanguageContext';
+import Navigation from './components/Navigation';
+import Footer from './components/Footer';
+import ErrorBoundary from './components/ErrorBoundary';
+import AppRoutes from './routes'; // Using the main routes file
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,38 +18,36 @@ const queryClient = new QueryClient({
   },
 })
 
-function App() {
+const App: React.FC = () => {
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <LanguageProvider>
-          <TooltipProvider>
-            <Router>
-              <div className="relative min-h-screen">
-                <MainNav />
-                <div className="pt-16">
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/subscription" element={<SubscriptionPage />} />
-                    <Route path="/service/:category" element={<ServicePage />} />
-                    <Route path="/service/commercial/:category" element={<CommercialServiceCategory />} />
-                    <Route path="/service/commercial" element={<CommercialServices />} />
-                    <Route path="/service/appliances" element={<ApplianceServices />} />
-                    <Route path="/service/painting" element={<PaintingServices />} />
-                    <Route path="/service/painting/:category" element={<PaintingServiceCategory />} />
-                    <Route path="/service/contractor" element={<ContractorServices />} />
-                    <Route path="/service/contractor/:category" element={<ContractorServiceCategory />} />
-                  </Routes>
+        <Auth0Provider
+          domain={import.meta.env.VITE_AUTH0_DOMAIN}
+          clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
+          authorizationParams={{
+            redirect_uri: window.location.origin,
+            audience: import.meta.env.VITE_AUTH0_AUDIENCE,
+            scope: import.meta.env.VITE_AUTH0_SCOPE
+          }}
+        >
+          <LanguageProvider>
+            <TooltipProvider>
+              <Router>
+                <div className="min-h-screen flex flex-col">
+                  <Navigation />
+                  <main className="flex-grow">
+                    <AppRoutes />
+                  </main>
+                  <Footer />
                 </div>
-              </div>
-              <Toaster />
-              <Sonner />
-            </Router>
-          </TooltipProvider>
-        </LanguageProvider>
+              </Router>
+            </TooltipProvider>
+          </LanguageProvider>
+        </Auth0Provider>
       </QueryClientProvider>
     </ErrorBoundary>
   )
 }
 
-export default App
+export default App;

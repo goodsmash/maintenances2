@@ -1,11 +1,21 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { contractorServices } from "@/data/contractorServicesData";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useLanguage } from "@/context/LanguageContext";
-import { Button } from "@/components/ui/button";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useLanguage } from '@/context/LanguageContext';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Service } from '@/data/servicesData';
 
-const ContractorServices: React.FC = () => {
+interface ServiceLayoutProps {
+  serviceType: string;
+  services: Service[];
+  translationNamespace: string;
+}
+
+const ServiceLayout: React.FC<ServiceLayoutProps> = ({
+  serviceType,
+  services,
+  translationNamespace
+}) => {
   const { translate, language, setLanguage } = useLanguage();
 
   const languageOptions = [
@@ -14,18 +24,15 @@ const ContractorServices: React.FC = () => {
     { code: 'zh', name: '中文' }
   ];
 
-  const services = translate('services', 'contractorServices');
-  const benefits = translate('whyChooseUs.benefits', 'contractorServices');
-
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-4xl font-bold">
-            {translate('title', 'contractorServices')}
+            {translate('title', translationNamespace)}
           </h1>
           <p className="text-muted-foreground mt-2">
-            {translate('subtitle', 'contractorServices')}
+            {translate('subtitle', translationNamespace)}
           </p>
         </div>
         <div className="flex space-x-2">
@@ -43,10 +50,10 @@ const ContractorServices: React.FC = () => {
       </div>
       
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {Object.entries(services).map(([serviceKey, service]: [string, any]) => (
+        {services.map((service) => (
           <Link 
-            to={`/service/contractor/${serviceKey}`} 
-            key={serviceKey}
+            to={`/service/${serviceType}/${service.id}`} 
+            key={service.id}
             className="hover:no-underline"
           >
             <Card className="hover:shadow-lg transition-all duration-300 h-full">
@@ -60,7 +67,7 @@ const ContractorServices: React.FC = () => {
                 
                 <div className="flex justify-between items-center">
                   <span className="text-primary font-bold">
-                    {contractorServices.find(s => s.id === serviceKey)?.priceRange}
+                    {service.priceRange}
                   </span>
                   <span className="text-sm text-primary hover:underline">
                     Learn More →
@@ -74,13 +81,13 @@ const ContractorServices: React.FC = () => {
       
       <div className="mt-16 text-center">
         <h2 className="text-3xl font-bold mb-6">
-          {translate('whyChooseUs.title', 'contractorServices')}
+          {translate('whyChooseUs.title', translationNamespace)}
         </h2>
         <div className="grid md:grid-cols-3 gap-8">
-          {benefits.map((benefit: any, index: number) => (
-            <div key={index}>
+          {translate('whyChooseUs.benefits', translationNamespace).map((benefit: any, index: number) => (
+            <div key={index} className="p-6 bg-card rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-4">{benefit.title}</h3>
-              <p>{benefit.description}</p>
+              <p className="text-muted-foreground">{benefit.description}</p>
             </div>
           ))}
         </div>
@@ -89,4 +96,4 @@ const ContractorServices: React.FC = () => {
   );
 };
 
-export default ContractorServices;
+export default ServiceLayout;
