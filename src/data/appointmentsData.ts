@@ -1,33 +1,64 @@
+/**
+ * Appointments Data Module
+ * 
+ * Defines the data structure and operations for managing maintenance service appointments.
+ * Uses Zod for runtime type validation and TypeScript type inference.
+ */
+
 import { z } from 'zod';
 
+/**
+ * Appointment Schema Definition
+ * Validates the structure of appointment data using Zod
+ */
 export const appointmentSchema = z.object({
+  /** Unique identifier for the appointment */
   id: z.string(),
+  /** Type of service being scheduled */
   serviceType: z.string(),
+  /** Specific service identifier */
   serviceId: z.string(),
+  /** Customer's unique identifier */
   customerId: z.string(),
+  /** Customer's full name */
   customerName: z.string(),
+  /** Customer's email address */
   customerEmail: z.string(),
+  /** Customer's contact number */
   customerPhone: z.string(),
+  /** Service location address */
   address: z.string(),
+  /** Appointment date in ISO format */
   date: z.string(),
+  /** Appointment time slot */
   time: z.string(),
+  /** Current status of the appointment */
   status: z.enum(['pending', 'confirmed', 'completed', 'cancelled']),
+  /** Optional additional notes */
   notes: z.string().optional(),
+  /** Service urgency level */
   urgencyLevel: z.string(),
+  /** Estimated duration of the service */
   estimatedDuration: z.string(),
+  /** Service price */
   price: z.number(),
+  /** Assigned technician details */
   technician: z.object({
     id: z.string(),
     name: z.string(),
     qualifications: z.array(z.string()),
     rating: z.number().optional(),
   }).optional(),
+  /** Appointment creation timestamp */
   createdAt: z.string(),
+  /** Last update timestamp */
   updatedAt: z.string()
 });
 
+/** Type definition for Appointment, inferred from the schema */
 export type Appointment = z.infer<typeof appointmentSchema>;
 
+/** Available time slots for appointments */
 export const timeSlots = [
   '08:00', '08:30', '09:00', '09:30', '10:00', '10:30',
   '11:00', '11:30', '12:00', '12:30', '13:00', '13:30',
@@ -114,7 +145,14 @@ export const mockAppointments: Appointment[] = [
   }
 ];
 
-export const getAvailableTimeSlots = async (date: string, serviceType: string) => {
+/**
+ * Get available time slots for a specific date and service type
+ * 
+ * @param date - The date to check availability for
+ * @param serviceType - The type of service being scheduled
+ * @returns Array of available time slots
+ */
+export const getAvailableTimeSlots = async (date: string, serviceType: string): Promise<string[]> => {
   // In a real application, this would check against actual booked appointments
   // For now, return mock data excluding times from mockAppointments
   const bookedSlots = mockAppointments
@@ -124,7 +162,16 @@ export const getAvailableTimeSlots = async (date: string, serviceType: string) =
   return timeSlots.filter(slot => !bookedSlots.includes(slot));
 };
 
-export const createAppointment = async (appointmentData: Omit<Appointment, 'id' | 'createdAt' | 'updatedAt'>) => {
+/**
+ * Create a new appointment in the system
+ * 
+ * @param appointmentData - The appointment data excluding auto-generated fields
+ * @returns The created appointment with generated ID and timestamps
+ * @throws Error if appointment creation fails
+ */
+export const createAppointment = async (
+  appointmentData: Omit<Appointment, 'id' | 'createdAt' | 'updatedAt'>
+): Promise<Appointment> => {
   // In a real application, this would create an appointment in the database
   const appointment: Appointment = {
     ...appointmentData,

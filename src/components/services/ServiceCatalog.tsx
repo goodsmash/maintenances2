@@ -1,3 +1,15 @@
+/**
+ * ServiceCatalog Component
+ * 
+ * A comprehensive catalog of maintenance services organized by categories.
+ * Features include:
+ * - Service filtering and search
+ * - Category-based organization
+ * - Interactive service cards
+ * - Urgency level indicators
+ * - Responsive grid layout
+ */
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -28,12 +40,33 @@ import { Badge } from '@/components/ui/badge';
 import { serviceCategories, ServiceCategory, Service, UrgencyLevel } from '@/data/serviceCategories';
 import * as Icons from 'lucide-react';
 
+/**
+ * Props for the ServiceCard component
+ */
 interface ServiceCardProps {
+  /**
+   * The service details to display
+   */
   service: Service;
+  /**
+   * The category the service belongs to
+   */
   category: ServiceCategory;
+  /**
+   * Callback function when service is requested
+   */
   onRequestService: (service: Service, category: ServiceCategory) => void;
 }
 
+/**
+ * ServiceCard Component
+ * Displays individual service information in a card format with
+ * interactive elements and visual indicators for service status
+ * 
+ * @param service - The service details to display
+ * @param category - The category the service belongs to
+ * @param onRequestService - Callback function when service is requested
+ */
 function ServiceCard({ service, category, onRequestService }: ServiceCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -85,11 +118,27 @@ function ServiceCard({ service, category, onRequestService }: ServiceCardProps) 
   );
 }
 
+/**
+ * Props for the CategorySection component
+ */
 interface CategorySectionProps {
+  /**
+   * The category of services to display
+   */
   category: ServiceCategory;
+  /**
+   * Callback function when a service is requested
+   */
   onRequestService: (service: Service, category: ServiceCategory) => void;
 }
 
+/**
+ * CategorySection Component
+ * Renders a collapsible section containing services for a specific category
+ * 
+ * @param category - The category of services to display
+ * @param onRequestService - Callback function when a service is requested
+ */
 function CategorySection({ category, onRequestService }: CategorySectionProps) {
   const Icon = Icons[category.icon as keyof typeof Icons];
 
@@ -114,6 +163,19 @@ function CategorySection({ category, onRequestService }: CategorySectionProps) {
   );
 }
 
+/**
+ * Main ServiceCatalog Component
+ * Provides a searchable, filterable interface for browsing maintenance services
+ * 
+ * Features:
+ * - Full-text search across services
+ * - Category-based filtering
+ * - Urgency level filtering
+ * - Responsive grid layout
+ * - Animated transitions
+ * 
+ * @returns React component
+ */
 export function ServiceCatalog() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');

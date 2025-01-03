@@ -1,3 +1,19 @@
+/**
+ * AppointmentScheduler Component
+ * 
+ * A comprehensive appointment scheduling interface that allows users to:
+ * - Select available dates
+ * - Choose from available time slots
+ * - Book and confirm appointments
+ * - Receive instant feedback on scheduling status
+ * 
+ * Features:
+ * - Integration with Auth0 for user authentication
+ * - Real-time availability checking
+ * - Toast notifications for user feedback
+ * - Responsive calendar interface
+ */
+
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Calendar } from '@/components/ui/calendar';
@@ -14,13 +30,37 @@ import { timeSlots, getAvailableTimeSlots, createAppointment } from '@/data/appo
 import { format } from 'date-fns';
 import { useToast } from '@/components/ui/use-toast';
 
+/**
+ * Props for the AppointmentScheduler component
+ */
 interface AppointmentSchedulerProps {
+  /** Type of service being scheduled */
   serviceType: string;
+  /** Unique identifier for the service */
   serviceId: string;
+  /** Display name of the service */
   serviceName: string;
+  /** Optional callback function called after successful scheduling */
   onScheduled?: () => void;
 }
 
+/**
+ * AppointmentScheduler Component
+ * Handles the scheduling flow for maintenance services
+ * 
+ * @param serviceType - Type of service being scheduled
+ * @param serviceId - Unique identifier for the service
+ * @param serviceName - Display name of the service
+ * @param onScheduled - Optional callback function called after successful scheduling
+ * 
+ * @remarks
+ * This component manages the entire scheduling flow including:
+ * - Date selection via calendar
+ * - Time slot selection
+ * - Availability checking
+ * - Appointment creation
+ * - User feedback
+ */
 export const AppointmentScheduler: React.FC<AppointmentSchedulerProps> = ({
   serviceType,
   serviceId,
